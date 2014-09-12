@@ -77,6 +77,7 @@ function (Settings) {
       'stats',
       'sparklines',
       'heatmap'
+      'multifieldhistogram'
     ]
   });
 });

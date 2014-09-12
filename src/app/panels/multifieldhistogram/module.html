@@ -1,4 +1,4 @@
-<div ng-controller='histogram' ng-init="init()" style="min-height:{{panel.height || row.height}}">
+<div ng-controller='multifieldhistogram' ng-init="init()" style="min-height:{{panel.height || row.height}}">
   <style>
     .histogram-legend {
       display:inline-block;
@@ -30,7 +30,7 @@
 
     /* this is actually should be in bootstrap */
     .form-inline .checkbox {
-        display: inline-block;
+	display: inline-block;
     }
 
     .histogram-marker {
@@ -45,58 +45,58 @@
   <div>
     <span ng-show='panel.options'>
       <a class="link small" ng-show='panel.options' ng-click="options=!options">
-        View <i ng-show="!options" class="icon-caret-right"></i><i ng-show="options" class="icon-caret-down"></i>
+	View <i ng-show="!options" class="icon-caret-right"></i><i ng-show="options" class="icon-caret-down"></i>
       </a> |&nbsp
     </span>
     <span ng-show='panel.zoomlinks'>
       <!--<a class='small' ng-click='zoom(0.5)'><i class='icon-zoom-in'></i> Zoom In</a>-->
       <a class='small' ng-click='zoom(2)'><i class='icon-zoom-out'></i> Zoom Out</a> |&nbsp
     </span>
-    <span ng-show="panel.legend" ng-repeat='series in legend' class="histogram-legend">
+    <span ng-show="panel.legend" ng-repeat='series in _.values(legend)' class="histogram-legend">
       <i class='icon-circle' ng-style="{color: series.query.color}"></i>
       <span class='small histogram-legend-item'>
-        <span ng-if="panel.show_query">{{series.query.alias || series.query.query}}</span>
-        <span ng-if="!panel.show_query">{{series.query.alias}}</span>
-        <span ng-show="panel.legend_counts"> ({{series.hits}})</span>
+	<span ng-if="panel.show_query">{{series.query.alias || series.query.query}}</span>
+	<span ng-if="!panel.show_query">{{series.query.alias}}</span>
+	<span ng-show="panel.legend_counts"> ({{series.hits}})</span>
       </span>
     </span>
-    <span ng-show="panel.legend" class="small"><span ng-show="panel.derivative"> change in </span><span ng-show="panel.integral"> integral over </span><span class="strong" ng-show="panel.value_field && panel.mode != 'count'">{{panel.value_field}}</span> {{panel.mode}} per <strong ng-hide="panel.scaleSeconds">{{panel.interval}}</strong><strong ng-show="panel.scaleSeconds">1s</strong> | (<strong>{{hits}}</strong> hits)</span>
+    <span ng-show="panel.legend" class="small"><span ng-show="panel.derivative"> change in </span><span class="strong" ng-show="panel.value_field && panel.mode != 'count'">{{panel.value_field}}</span> {{panel.mode}} per <strong ng-hide="panel.scaleSeconds">{{panel.interval}}</strong><strong ng-show="panel.scaleSeconds">1s</strong> | (<strong>{{hits}}</strong> hits)</span>
   </div>
   <form class="form-inline bordered histogram-options" ng-show="options">
     <span>
       <div class="checkbox">
-        <label class="small">
-          <input type="checkbox" ng-model="panel.bars" ng-checked="panel.bars" ng-change="render()">
-          Bars
-        </label>
+	<label class="small">
+	  <input type="checkbox" ng-model="panel.lines" ng-checked="panel.lines" ng-change="render()">
+	  Lines
+	</label>
       </div>
       <div class="checkbox">
-        <label class="small">
-          <input type="checkbox" ng-model="panel.lines" ng-checked="panel.lines" ng-change="render()">
-          Lines
-        </label>
+	<label class="small">
+	  <input type="checkbox" ng-model="panel.points" ng-checked="panel.points" ng-change="render()">
+	  Points
+	</label>
       </div>
       <div class="checkbox">
-        <label class="small">
-          <input type="checkbox" ng-model="panel.stack" ng-checked="panel.stack" ng-change="render()">
-          Stack
-        </label>
+	<label class="small">
+	  <input type="checkbox" ng-model="panel.stack" ng-checked="panel.stack" ng-change="render()">
+	  Stack
+	</label>
       </div>
     </span>
     <span ng-show="panel.stack">
       <div class="checkbox">
-        <label style="white-space:nowrap" class="small">
-          <input type="checkbox"  ng-model="panel.percentage" ng-checked="panel.percentage" ng-change="render()">
-          Percent
-        </label>
+	<label style="white-space:nowrap" class="small">
+	  <input type="checkbox"  ng-model="panel.percentage" ng-checked="panel.percentage" ng-change="render()">
+	  Percent
+	</label>
       </div>
     </span>
     <span>
       <div class="checkbox">
-        <label class="small">
-          <input type="checkbox" ng-model="panel.legend" ng-checked="panel.legend" ng-change="render()">
-          Legend
-        </label>
+	<label class="small">
+	  <input type="checkbox" ng-model="panel.legend" ng-checked="panel.legend" ng-change="render()">
+	  Legend
+	</label>
       </div>
     </span>
     <span>
@@ -104,5 +104,5 @@
     </span>
   </form>
   <center><img ng-show='panel.loading' src="img/load_big.gif"></center>
-  <div histogram-chart class="pointer histogram-chart" params="{{panel}}"></div>
+  <div multifieldhistogram-chart class="pointer histogram-chart" params="{{panel}}"></div>
 </div>
